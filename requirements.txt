@@ -1,0 +1,30 @@
+# Core scientific Python stack
+ipykernel>=6.29,<7
+jupyterlab>=4.1,<5
+notebook>=7.1,<8
+numpy>=1.26
+pandas>=2.2
+scipy>=1.12
+pyarrow>=15.0
+matplotlib>=3.8
+seaborn>=0.13
+plotly>=5.19
+scikit-learn>=1.4
+statsmodels>=0.14
+
+# Data access and utilities
+requests>=2.31
+beautifulsoup4>=4.12
+python-dotenv>=1.0
+openpyxl>=3.1
+xlrd>=2.0
+tqdm>=4.66
+
+# Notebook tooling
+nbformat>=5.10
+nbconvert>=7.14
+
+# Code quality
+black>=24.4
+isort>=5.13
+ruff>=0.4
