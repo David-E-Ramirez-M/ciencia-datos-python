@@ -1,5 +1,6 @@
 import argparse
 import json
+import socket
 import subprocess
 from pathlib import Path
 
@@ -30,6 +31,14 @@ URL_DATASETS = {
         "sep": ";",
     },
 }
+
+
+def can_connect(host: str, port: int = 443, timeout: float = 2.0) -> bool:
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
 
 
 def save_dataframe(df: pd.DataFrame, output_dir: Path, filename: str, metadata: dict) -> Path:
@@ -145,9 +154,16 @@ def main() -> None:
         default="",
         help="Dataset sklearn de respaldo (ejemplo: iris) si falla red.",
     )
+    parser.add_argument(
+        "--offline",
+        action="store_true",
+        help="Evita descargas remotas (OpenML/URL/Kaggle) y usa fallback si aplica.",
+    )
     args = parser.parse_args()
 
     if args.source == "kaggle":
+        if args.offline:
+            raise RuntimeError("Modo offline activo: Kaggle deshabilitado.")
         if not args.kaggle_dataset:
             raise ValueError("Debes indicar --kaggle-dataset para source=kaggle.")
         download_kaggle_dataset(args.kaggle_dataset, args.output_dir, args.unzip)
@@ -159,8 +175,12 @@ def main() -> None:
         if args.source == "sklearn":
             df, meta = load_sklearn_dataset(args.name)
         elif args.source == "openml":
+            if args.offline or not can_connect("api.openml.org"):
+                raise RuntimeError("Sin conectividad a OpenML.")
             df, meta = load_openml_dataset(args.name)
         else:
+            if args.offline or not can_connect("archive.ics.uci.edu"):
+                raise RuntimeError("Sin conectividad a UCI.")
             df, meta = load_url_dataset(args.name)
     except Exception as exc:
         if args.fallback_sklearn:

@@ -46,7 +46,7 @@ notebook: $(VENV)
 	$(JUPYTER) lab
 
 lint: $(VENV)
-	$(PYTHON_BIN) -m ruff check notebooks scripts src
+	$(PYTHON_BIN) -m ruff check --no-cache notebooks scripts src
 
 format: $(VENV)
 	$(PYTHON_BIN) -m isort notebooks scripts src
@@ -68,15 +68,15 @@ iris-ai: $(VENV)
 	$(PYTHON_BIN) scripts/project_iris_ai.py
 
 titanic-ai: $(VENV)
-	$(PYTHON_BIN) scripts/project_titanic_openml_ai.py
+	$(PYTHON_BIN) scripts/project_titanic_openml_ai.py --offline
 
 wine-ai: $(VENV)
-	$(PYTHON_BIN) scripts/project_wine_quality_ai.py --save-raw
+	$(PYTHON_BIN) scripts/project_wine_quality_ai.py --save-raw --offline
 
 datasets-demo: $(VENV)
 	$(PYTHON_BIN) scripts/dataset_connector.py --source sklearn --name iris
-	$(PYTHON_BIN) scripts/dataset_connector.py --source openml --name titanic --fallback-sklearn iris
-	$(PYTHON_BIN) scripts/dataset_connector.py --source url --name wine_quality_red --fallback-sklearn wine
+	$(PYTHON_BIN) scripts/dataset_connector.py --source openml --name titanic --fallback-sklearn iris --offline
+	$(PYTHON_BIN) scripts/dataset_connector.py --source url --name wine_quality_red --fallback-sklearn wine --offline
 
 visual-assets: $(VENV)
 	$(PYTHON_BIN) scripts/build_readme_assets.py

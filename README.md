@@ -25,8 +25,8 @@ Portafolio tecnico para reclutadores y equipos de analitica: proyectos de machin
 ## Demos Principales
 
 - Clasificacion Iris: `python scripts/project_iris_ai.py`
-- Clasificacion Titanic/OpenML con fallback: `python scripts/project_titanic_openml_ai.py`
-- Regresion Wine Quality/UCI con fallback: `python scripts/project_wine_quality_ai.py --save-raw`
+- Clasificacion Titanic/OpenML con fallback: `python scripts/project_titanic_openml_ai.py --offline`
+- Regresion Wine Quality/UCI con fallback: `python scripts/project_wine_quality_ai.py --save-raw --offline`
 - EDA MiniProyecto: `python scripts/analisis_datos.py --input MiniProyecto/coffee_db.parquet`
 
 ## Notebooks Showcase (Muy Vendedor)
@@ -61,8 +61,8 @@ Ejemplos:
 
 ```bash
 python scripts/dataset_connector.py --source sklearn --name iris
-python scripts/dataset_connector.py --source openml --name titanic --fallback-sklearn iris
-python scripts/dataset_connector.py --source url --name wine_quality_red --fallback-sklearn wine
+python scripts/dataset_connector.py --source openml --name titanic --fallback-sklearn iris --offline
+python scripts/dataset_connector.py --source url --name wine_quality_red --fallback-sklearn wine --offline
 python scripts/dataset_connector.py --source kaggle --kaggle-dataset yasserh/titanic-dataset --output-dir data/raw --unzip
 ```
 

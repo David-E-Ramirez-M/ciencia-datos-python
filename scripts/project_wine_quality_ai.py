@@ -1,5 +1,6 @@
 import argparse
 from io import StringIO
+import socket
 from pathlib import Path
 
 import pandas as pd
@@ -17,6 +18,14 @@ WINE_RED_URL = (
     "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/"
     "winequality-red.csv"
 )
+
+
+def can_connect(host: str, port: int = 443, timeout: float = 2.0) -> bool:
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
 
 
 def download_wine_dataset() -> pd.DataFrame:
@@ -54,10 +63,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Proyecto IA: regresion con Wine Quality (UCI).")
     parser.add_argument("--output-dir", type=Path, default=Path("reports"))
     parser.add_argument("--save-raw", action="store_true", help="Guardar copia en data/raw.")
+    parser.add_argument(
+        "--offline",
+        action="store_true",
+        help="Evita llamadas remotas a UCI y usa fallback local.",
+    )
     args = parser.parse_args()
 
     dataset_label = f"UCI Wine Quality ({WINE_RED_URL})"
     try:
+        if args.offline or not can_connect("archive.ics.uci.edu"):
+            raise RuntimeError("Sin conectividad a UCI.")
         df = download_wine_dataset()
         y = df["quality"]
         x = df.drop(columns=["quality"])

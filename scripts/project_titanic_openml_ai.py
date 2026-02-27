@@ -1,4 +1,5 @@
 import argparse
+import socket
 from pathlib import Path
 
 import pandas as pd
@@ -11,6 +12,14 @@ from sklearn.metrics import average_precision_score, classification_report, roc_
 from sklearn.model_selection import StratifiedKFold, cross_validate, train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+
+def can_connect(host: str, port: int = 443, timeout: float = 2.0) -> bool:
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            return True
+    except OSError:
+        return False
 
 
 def build_preprocessor(x: pd.DataFrame) -> ColumnTransformer:
@@ -66,12 +75,19 @@ def main() -> None:
         description="Proyecto IA: clasificacion Titanic usando OpenML."
     )
     parser.add_argument("--output-dir", type=Path, default=Path("reports"))
+    parser.add_argument(
+        "--offline",
+        action="store_true",
+        help="Evita llamadas remotas a OpenML y usa fallback local.",
+    )
     args = parser.parse_args()
 
     cache_dir = Path("data/external/openml_cache")
     cache_dir.mkdir(parents=True, exist_ok=True)
     dataset_label = "OpenML Titanic (version 1)"
     try:
+        if args.offline or not can_connect("api.openml.org"):
+            raise RuntimeError("Sin conectividad a OpenML.")
         bunch = fetch_openml(name="titanic", version=1, as_frame=True, data_home=str(cache_dir))
         df = bunch.frame.copy()
         y = (df["survived"].astype(str) == "1").astype(int)
