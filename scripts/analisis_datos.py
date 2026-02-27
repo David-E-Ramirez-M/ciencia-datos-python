@@ -5,7 +5,33 @@ import numpy as np
 import pandas as pd
 
 
+def resolve_input_path(path: Path) -> Path:
+    repo_root = Path(__file__).resolve().parents[1]
+
+    if path.is_absolute():
+        return path
+    if path.exists():
+        return path
+    candidate = repo_root / path
+    if candidate.exists():
+        return candidate
+
+    if path.name == "coffee_db.parquet":
+        fallback = repo_root / "MiniProyecto" / "coffee_db.parquet"
+        if fallback.exists():
+            return fallback
+
+    return candidate
+
+
 def load_dataframe(path: Path) -> pd.DataFrame:
+    path = resolve_input_path(path)
+    if not path.exists():
+        raise FileNotFoundError(
+            f"No se encontro el archivo: {path}. "
+            "Usa --input con una ruta valida o ejecuta desde la raiz del repo."
+        )
+
     suffix = path.suffix.lower()
     if suffix == ".parquet":
         return pd.read_parquet(path)
@@ -30,7 +56,7 @@ def main() -> None:
     parser.add_argument(
         "--input",
         type=Path,
-        default=Path("NTT/coffee_db.parquet"),
+        default=Path("MiniProyecto/coffee_db.parquet"),
         help="Ruta a CSV o Parquet.",
     )
     parser.add_argument(

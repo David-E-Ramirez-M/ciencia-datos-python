@@ -1,122 +1,80 @@
 # Ciencia De Datos Con Python
 
-Portafolio tecnico orientado a reclutadores y equipos de analitica.
-Este repositorio muestra habilidades practicas en:
+![Banner portfolio](reports/figures/readme_banner.png)
 
-- analisis exploratorio y estadistica aplicada
-- machine learning supervisado y no supervisado
-- visualizacion y comunicacion de hallazgos
-- organizacion reproducible de proyectos de datos
+Portafolio tecnico para reclutadores y equipos de analitica: proyectos de machine learning, estadistica aplicada y storytelling con datos.
 
-## Perfil Tecnico Que Demuestra Este Repo
+## Vista Rapida
 
-- `Python`: `pandas`, `numpy`, `scikit-learn`, `statsmodels`
-- `Visualizacion`: `matplotlib`, `seaborn`, `plotly`
-- `Entorno`: notebooks + scripts + estructura reproducible
-- `Buenas practicas`: `ruff`, `black`, `isort`, entorno virtual
+![Model snapshot](reports/figures/model_snapshot.png)
 
-## Proyectos Destacados
+![MiniProyecto trend](reports/figures/miniproyecto_top5_trend.png)
 
-Revision rapida por notebook: ver [PORTFOLIO.md](PORTFOLIO.md).
+## Lo Que Demuestro
 
-### Machine Learning
-- `Random Forest (Iris)`: clasificacion multiclase y evaluacion base.
-- `MLP (Digits)`: red neuronal para reconocimiento de digitos.
-- `Gradient Boosting (Regresion)`: modelado y comparacion en problemas continuos.
+- construccion de pipelines de datos reproducibles
+- comparacion de modelos con metricas correctas
+- analisis estadistico con criterio de supuestos
+- comunicacion ejecutiva orientada a decision
 
-### Ciencia De Datos E IA
-- `K-Means Clustering`: segmentacion y analisis de grupos.
-- `Decision Tree Classifier`: modelo interpretable para clasificacion.
-- `SVM Classification`: separacion de clases con margen maximo.
-- `PCA`: reduccion de dimensionalidad y analisis de varianza explicada.
+## Demos Principales
 
-### Estadistica Aplicada
-- `Descriptive Statistics`: distribucion y metricas clave.
-- `Correlation Analysis`: relaciones entre variables.
-- `Hypothesis Testing (t-test)`: contraste de medias.
-- `Chi-Square Test`: independencia entre variables categoricas.
-- `ANOVA`: comparacion de medias en multiples grupos.
-- `Time Series Decomposition`: tendencia, estacionalidad y residuales.
+- Clasificacion Iris: `python scripts/project_iris_ai.py`
+- Clasificacion Titanic/OpenML con fallback: `python scripts/project_titanic_openml_ai.py`
+- Regresion Wine Quality/UCI con fallback: `python scripts/project_wine_quality_ai.py --save-raw`
+- EDA MiniProyecto: `python scripts/analisis_datos.py --input MiniProyecto/coffee_db.parquet`
 
-## Ejecucion Rapida
+## Notebooks Showcase (Muy Vendedor)
 
-### Opcion recomendada (Makefile)
+- [notebooks/showcase/01_showcase_ejecutivo.ipynb](notebooks/showcase/01_showcase_ejecutivo.ipynb)
+- [notebooks/showcase/02_miniproyecto_storytelling.ipynb](notebooks/showcase/02_miniproyecto_storytelling.ipynb)
+
+Estos notebooks estan preparados para entrevista: contexto, grafica, lectura ejecutiva y cierre accionable.
+
+## Comandos Make
+
+- `make install`
+- `make notebook`
+- `make run-eda`
+- `make churn-demo`
+- `make iris-ai`
+- `make titanic-ai`
+- `make wine-ai`
+- `make datasets-demo`
+- `make visual-assets`
+
+## Conexion De Datasets
+
+Script: `scripts/dataset_connector.py`
+
+- `sklearn`: datasets locales (iris, wine, breast_cancer)
+- `openml`: titanic, adult, house_prices
+- `url`: wine_quality_red, wine_quality_white
+- `kaggle`: descarga por slug con CLI oficial
+
+Ejemplos:
+
 ```bash
-make install
-make notebook
+python scripts/dataset_connector.py --source sklearn --name iris
+python scripts/dataset_connector.py --source openml --name titanic --fallback-sklearn iris
+python scripts/dataset_connector.py --source url --name wine_quality_red --fallback-sklearn wine
+python scripts/dataset_connector.py --source kaggle --kaggle-dataset yasserh/titanic-dataset --output-dir data/raw --unzip
 ```
 
-### Opcion manual
-```bash
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# Linux/macOS
-source .venv/bin/activate
-
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python -m jupyter lab
-```
-
-## Comandos Utiles
-
-- `make install`: crea `.venv` e instala dependencias.
-- `make notebook`: registra kernel y abre JupyterLab.
-- `make lint`: valida estilo con `ruff`.
-- `make format`: aplica `isort` + `black`.
-- `make clean`: limpia entorno virtual y caches.
-- `make run-eda`: ejecuta EDA reproducible sobre `NTT/coffee_db.parquet`.
-- `make normality-demo`: ejecuta diagnostico de normalidad con salida en `reports/`.
-- `make churn-demo`: ejecuta pipeline de clasificacion binaria end-to-end.
-
-## Estructura Del Repositorio
+## Estructura
 
 ```text
-data/                      # Datos por etapa (raw/interim/processed/external)
-models/                    # Artefactos de modelos entrenados
-notebooks/
-  ciencia_datos_ia/        # IA clasica: clustering, PCA, clasificacion
-  estadistica/             # Estadistica inferencial y descriptiva
-  machine_learning/        # Modelos supervisados
-reports/figures/           # Graficos y reportes generados
-scripts/                   # Scripts ejecutables de apoyo
-NTT/                       # Material complementario del proyecto NTT
-requirements.txt
-Makefile
-README.md
+data/                      # datos por etapa
+models/                    # artefactos de modelos
+notebooks/                 # notebooks tecnicos + showcase
+reports/figures/           # imagenes y resultados
+scripts/                   # pipelines ejecutables
+MiniProyecto/              # dataset y material complementario
 ```
 
-## Que Valora Un Reclutador Aqui
+## Referencias
 
-- capacidad de ir de datos a conclusion analitica
-- conocimiento de fundamentos estadisticos y de ML
-- estructura ordenada y facil de reproducir
-- codigo legible y mantenible
-
-## Proximas Mejoras Recomendadas
-
-- anadir metricas y resultados clave en cada notebook (`accuracy`, `F1`, `RMSE`)
-- exportar graficos finales a `reports/figures/`
-- incluir 1 caso end-to-end con problema de negocio y conclusiones ejecutivas
-
-## Roadmap De Portafolio
-
-- ver plan de 10 proyectos estrategicos en [ROADMAP_PORTFOLIO.md](ROADMAP_PORTFOLIO.md)
-- ver estandar de entregables en [PROJECT_STANDARDS.md](PROJECT_STANDARDS.md)
-
-## Referencias Tecnicas (Internet)
-
-- SciPy (Shapiro / Anderson / KS): https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html
-- SciPy Anderson-Darling: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.anderson.html
-- Statsmodels QQ-plot: https://www.statsmodels.org/stable/generated/statsmodels.graphics.gofplots.qqplot.html
-- scikit-learn ROC-AUC: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html
-- scikit-learn Average Precision: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html
-- scikit-learn StratifiedKFold: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedKFold.html
-- scikit-learn fetch_openml: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_openml.html
-- TensorFlow text/IMDB: https://www.tensorflow.org/text/guide/word_embeddings
-- Docker overview: https://docs.docker.com/get-started/docker-overview/
-
-## Contribuciones
-
-Se aceptan pull requests con mejoras, nuevos notebooks o refactorizaciones.
+- scikit-learn datasets: https://scikit-learn.org/stable/datasets.html
+- OpenML Titanic: https://api.openml.org/d/40945
+- UCI Wine Quality: https://archive.ics.uci.edu/ml/datasets/wine_quality
+- Kaggle API: https://github.com/Kaggle/kaggle-api

@@ -8,7 +8,28 @@ import statsmodels.api as sm
 from scipy import stats
 
 
+def resolve_input_path(path: Path) -> Path:
+    repo_root = Path(__file__).resolve().parents[1]
+
+    if path.is_absolute():
+        return path
+    if path.exists():
+        return path
+
+    candidate = repo_root / path
+    if candidate.exists():
+        return candidate
+
+    if path.name == "coffee_db.parquet":
+        fallback = repo_root / "MiniProyecto" / "coffee_db.parquet"
+        if fallback.exists():
+            return fallback
+
+    return candidate
+
+
 def load_series(input_path: Path, column: str) -> pd.Series:
+    input_path = resolve_input_path(input_path)
     suffix = input_path.suffix.lower()
     if suffix == ".parquet":
         df = pd.read_parquet(input_path)
@@ -94,7 +115,7 @@ def main() -> None:
     parser.add_argument(
         "--input",
         type=Path,
-        default=Path("NTT/coffee_db.parquet"),
+        default=Path("MiniProyecto/coffee_db.parquet"),
         help="Ruta a dataset (CSV/Parquet).",
     )
     parser.add_argument(

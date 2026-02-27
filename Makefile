@@ -15,7 +15,7 @@ JUPYTER := $(VENV_BIN)/jupyter
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install notebook lint format clean run-eda normality-demo churn-demo
+.PHONY: help install notebook lint format clean run-eda normality-demo churn-demo iris-ai titanic-ai wine-ai datasets-demo visual-assets
 
 help:
 	@echo "Comandos disponibles:"
@@ -24,9 +24,14 @@ help:
 	@echo "  make lint          Ejecuta ruff para analisis estatico"
 	@echo "  make format        Aplica black e isort"
 	@echo "  make clean         Elimina artefactos temporales"
-	@echo "  make run-eda       Ejecuta EDA sobre NTT/coffee_db.parquet"
+	@echo "  make run-eda       Ejecuta EDA sobre MiniProyecto/coffee_db.parquet"
 	@echo "  make normality-demo Ejecuta diagnostico de normalidad (demo)"
 	@echo "  make churn-demo    Ejecuta clasificacion binaria end-to-end (demo)"
+	@echo "  make iris-ai       Ejecuta proyecto IA de clasificacion Iris"
+	@echo "  make titanic-ai    Ejecuta proyecto IA de Titanic (OpenML)"
+	@echo "  make wine-ai       Ejecuta proyecto IA de regresion Wine Quality (UCI)"
+	@echo "  make datasets-demo Descarga datasets de ejemplo en data/raw/"
+	@echo "  make visual-assets Genera imagenes para README/portfolio"
 
 $(VENV): requirements.txt
 	$(PYTHON) -m venv $(VENV)
@@ -51,11 +56,28 @@ clean:
 	$(RM_RF)
 
 run-eda: $(VENV)
-	$(PYTHON_BIN) scripts/analisis_datos.py --input NTT/coffee_db.parquet --top-n 10
+	$(PYTHON_BIN) scripts/analisis_datos.py --top-n 10
 
 normality-demo: $(VENV)
-	$(PYTHON_BIN) scripts/normality_diagnostics.py --input NTT/coffee_db.parquet --column Total_domestic_consumption
+	$(PYTHON_BIN) scripts/normality_diagnostics.py --column Total_domestic_consumption
 
 churn-demo: $(VENV)
 	$(PYTHON_BIN) scripts/churn_classification_pipeline.py
+
+iris-ai: $(VENV)
+	$(PYTHON_BIN) scripts/project_iris_ai.py
+
+titanic-ai: $(VENV)
+	$(PYTHON_BIN) scripts/project_titanic_openml_ai.py
+
+wine-ai: $(VENV)
+	$(PYTHON_BIN) scripts/project_wine_quality_ai.py --save-raw
+
+datasets-demo: $(VENV)
+	$(PYTHON_BIN) scripts/dataset_connector.py --source sklearn --name iris
+	$(PYTHON_BIN) scripts/dataset_connector.py --source openml --name titanic --fallback-sklearn iris
+	$(PYTHON_BIN) scripts/dataset_connector.py --source url --name wine_quality_red --fallback-sklearn wine
+
+visual-assets: $(VENV)
+	$(PYTHON_BIN) scripts/build_readme_assets.py
 

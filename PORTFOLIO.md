@@ -36,9 +36,16 @@ Guia breve para revisar evidencias tecnicas del repositorio.
 - `scripts/visualizacion_matplotlib.py`: visualizacion reproducible con exporte de figura.
 - `scripts/normality_diagnostics.py`: Shapiro + KS + Anderson + QQ-plot para validar supuestos.
 - `scripts/churn_classification_pipeline.py`: baseline end-to-end con CV estratificada y metricas ROC-AUC/F1/AP.
+- `scripts/dataset_connector.py`: conector de datasets (sklearn/OpenML/URL/Kaggle).
+- `scripts/project_iris_ai.py`: proyecto de clasificacion IA sobre Iris.
+- `scripts/project_titanic_openml_ai.py`: proyecto de clasificacion IA con Titanic desde OpenML.
+- `scripts/project_wine_quality_ai.py`: proyecto de regresion IA con Wine Quality desde UCI.
 
 ## Navegacion Recomendada
 
 1. Ver [PROJECT_STANDARDS.md](PROJECT_STANDARDS.md) para entender el criterio metodologico.
 2. Revisar [ROADMAP_PORTFOLIO.md](ROADMAP_PORTFOLIO.md) para el plan de expansion.
 3. Ejecutar demos por script para ver reproducibilidad tecnica.
+4. Abrir notebooks showcase para version entrevista:
+   - `notebooks/showcase/01_showcase_ejecutivo.ipynb`
+   - `notebooks/showcase/02_miniproyecto_storytelling.ipynb`

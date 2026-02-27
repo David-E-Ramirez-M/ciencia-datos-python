@@ -1,6 +1,6 @@
-# NTT
+# MiniProyecto
 
-Carpeta de apoyo para ejercicios y datos del proyecto NTT.
+Carpeta de apoyo para ejercicios y datos del MiniProyecto.
 
 ## Contenido
 
