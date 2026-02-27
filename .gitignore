@@ -218,6 +218,3 @@ models/**
 !models/**/
 !models/**/.gitkeep
 
-reports/**
-!reports/**/
-!reports/**/.gitkeep
