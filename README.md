@@ -1,14 +1,19 @@
 # Ciencia De Datos Con Python
 
-![Banner portfolio](reports/figures/readme_banner.png)
+<p align="center">
+  <img src="assets/readme/readme_banner.png" alt="Banner portfolio" width="100%" />
+</p>
 
 Portafolio tecnico para reclutadores y equipos de analitica: proyectos de machine learning, estadistica aplicada y storytelling con datos.
 
 ## Vista Rapida
 
-![Model snapshot](reports/figures/model_snapshot.png)
-
-![MiniProyecto trend](reports/figures/miniproyecto_top5_trend.png)
+<p align="center">
+  <img src="assets/readme/model_snapshot.png" alt="Model snapshot" width="95%" />
+</p>
+<p align="center">
+  <img src="assets/readme/miniproyecto_top5_trend.png" alt="MiniProyecto trend" width="95%" />
+</p>
 
 ## Lo Que Demuestro
 

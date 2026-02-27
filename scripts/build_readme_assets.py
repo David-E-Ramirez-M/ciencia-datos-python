@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def ensure_output_dir() -> Path:
-    output_dir = Path("reports/figures")
+    output_dir = Path("assets/readme")
     output_dir.mkdir(parents=True, exist_ok=True)
     return output_dir
 
